@@ -1,0 +1,21 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: rossllm
+    ports: ["5432:5432"]
+    volumes: [dbdata:/var/lib/postgresql/data]
+  orchestrator:
+    build: ./apps/orchestrator
+    env_file: [.env]
+    depends_on: [db]
+    ports: ["8001:8001"]
+  gateway:
+    build: ./apps/gateway
+    env_file: [.env]
+    depends_on: [orchestrator]
+    ports: ["8000:8000"]
+volumes:
+  dbdata:

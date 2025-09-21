@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Env & secrets
+.env
+*.key
+*.json
+
+# Data/model artifacts (store in bucket or DVC)
+models/
+checkpoints/
+data/**/*.bin
+data/**/*.pt
+data/**/*.npy
+embeddings/
+.DS_Store
+
+# Docker
+**/.pytest_cache
