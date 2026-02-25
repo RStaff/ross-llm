@@ -1,0 +1,6 @@
+services:
+  orchestrator:
+    environment:
+      EMBEDDING_PROVIDER: "hf"
+      HF_EMBED_MODEL: "sentence-transformers/all-MiniLM-L6-v2"
+      EMBEDDING_DIM: "384"
