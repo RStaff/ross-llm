@@ -19,3 +19,15 @@ embeddings/
 
 # Docker
 **/.pytest_cache
+/embeddings
+# --- ross-llm local-only ---
+.env.secrets
+*.pid
+logs/
+_data/
+data/
+memory/
+venv/
+*.bak
+*_backup*
+_quarantine_*/

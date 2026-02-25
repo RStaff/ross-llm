@@ -1,9 +1,9 @@
 .PHONY: up down logs db-migrate
 up:
-\tdocker compose up -d --build
+	 docker compose up -d --build
 down:
-\tdocker compose down
+	 docker compose down
 logs:
-\tdocker compose logs -f
+	 docker compose logs -f
 db-migrate:
-\tcat packages/retriever/sql/001_init.sql | docker compose exec -T db psql -U postgres -d rossllm
+	 cat packages/retriever/sql/001_init.sql | docker compose exec -T db psql -U postgres -d rossllm

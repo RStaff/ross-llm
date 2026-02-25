@@ -1,0 +1,35 @@
+# StaffordOS Modes Configuration v1
+# This file defines the 4 core operational modes for Ross-LLM / StaffordOS.
+
+modes:
+  personal_hq:
+    description: >
+      Core personal operating system for Ross: family, health, trauma boundaries,
+      energy constraints, values, and daily/weekly planning.
+    default_profile: general
+    memory_files:
+      - memory/personal_hq.yaml
+
+  business_hq:
+    description: >
+      Business and product focus: Abando, Stafford Media, active clients,
+      offers, pricing, and revenue goals.
+    default_profile: business
+    memory_files:
+      - memory/business_hq.yaml
+
+  career_hq:
+    description: >
+      Career navigation mode: FDE roles, data/AI/marketing systems roles,
+      interview prep, and job search strategy when needed.
+    default_profile: career
+    memory_files:
+      - memory/career_hq.yaml
+
+  staffordos_dev:
+    description: >
+      Internal StaffordOS / Ross-LLM dev mode: architecture, scripts, ports,
+      services, and system upgrade plans.
+    default_profile: dev
+    memory_files:
+      - memory/staffordos_dev.yaml

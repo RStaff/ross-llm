@@ -1,0 +1,7 @@
+.venv
+.git
+.dvc/cache
+embeddings
+data
+__pycache__
+*.pyc

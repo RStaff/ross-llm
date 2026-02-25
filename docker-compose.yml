@@ -1,21 +1,62 @@
 services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    networks:
+      - default
+    ports:
+      - "8096:8096"          # web UI
+      # Optional (leave commented unless you need them)
+      # - "8920:8920"        # HTTPS
+      # - "7359:7359/udp"    # discovery
+      # - "1900:1900/udp"    # DLNA
+    volumes:
+      - ./_data/jellyfin/config:/config
+      - ./_data/jellyfin/cache:/cache
+      - ./_data/media:/media
+
   db:
     image: pgvector/pgvector:pg16
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: rossllm
-    ports: ["5432:5432"]
-    volumes: [dbdata:/var/lib/postgresql/data]
+    ports:
+    - 5432:5432
+    volumes:
+    - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U postgres -d rossllm
+      interval: 2s
+      timeout: 2s
+      retries: 20
   orchestrator:
-    build: ./apps/orchestrator
-    env_file: [.env]
-    depends_on: [db]
-    ports: ["8001:8001"]
+    ports:
+    - 8001:8000
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --log-level debug --access-log
+    build:
+      context: .
+      dockerfile: apps/orchestrator/Dockerfile
+    env_file:
+    - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/rossllm
   gateway:
-    build: ./apps/gateway
-    env_file: [.env]
-    depends_on: [orchestrator]
-    ports: ["8000:8000"]
+    build:
+      context: .
+      dockerfile: apps/gateway/Dockerfile
+    env_file:
+    - .env
+    depends_on:
+    - orchestrator
+    ports:
+    - 8000:8000
 volumes:
-  dbdata:
+  dbdata: null
+
