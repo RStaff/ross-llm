@@ -83,7 +83,7 @@ echo "==> Add an example secrets template (optional, safe) ..."
 if [[ ! -f ".env.secrets.example" ]]; then
   cat > .env.secrets.example <<'EOF'
 # Copy to .env.secrets (this real file is ignored by git)
-# export OPENAI_API_KEY='sk-REPLACE_ME'
+# export OPENAI_API_KEY='REDACTED_OPENAI_KEY'
 EOF
   git add .env.secrets.example
 fi
